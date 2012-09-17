@@ -15,10 +15,10 @@ This plugin makes it simple to do [Daring Fireball](http://daringfireball.net) s
 
 To install add the plugin to your Nesta Gemfile
 
-In your views, be sure to use the `url_for` helper to link to the remote URL as needed in pages:
+In your views, be sure to use the `path_to` helper to link to the remote URL as needed in pages:
 
     - if @page.is_linked?
-      %a.permalink{:href => url_for(@page)}
+      %a.permalink{:href => path_to(@page.abspath)}
         &rarr;
 
 ... or by default in your atom feed:
@@ -27,7 +27,7 @@ In your views, be sure to use the `url_for` helper to link to the remote URL as 
     - @articles.each do |article|
       %entry
         %title= article.heading
-        %link{ :href => url_for(article), :type => 'text/html', :rel => 'alternate' }
+        %link{ :href => path_to(article.abspath), :type => 'text/html', :rel => 'alternate' }
         %id= atom_id(article)
     ...
 

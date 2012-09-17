@@ -9,8 +9,10 @@ module Nesta
   class App
     helpers Nesta::Plugin::Linkable::Helpers
 
-    def url_for(page)
-      page.is_linked? ? page.metadata('url') : File.join(base_url, page.path)
+    alias_method :path_to_without_linkable, :path_to
+    def path_to(page_path, absolute = false)
+      page = Nesta::Page.find_by_path(page_path)
+      (page.nil? || !page.is_linked?) ? path_to_without_linkable(page_path, absolute) : page.metadata('url')
     end
 
   end
